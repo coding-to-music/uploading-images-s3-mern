@@ -8,13 +8,33 @@ module.exports = function (app) {
 
   const multer = require("multer");
   var multerS3 = require('multer-s3')
-  var AWS = require("aws-sdk");
-  var s3 = new aws.S3({ /* ... */ })
-  var storage = multer.memoryStorage();
-  var upload = multer({ storage: storage });
+  const aws = require('aws-sdk'); //"^2.2.41"
 
- 
 
+  aws.config.update({
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    region: process.env.AWS_REGION
+});
+  const s3 = new aws.S3();
+
+  const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        acl: 'public-read',
+        bucket: process.env.AWS_BUCKET_NAME,
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
+});
+
+
+//used by upload form
+app.post('/upload', upload.array('upl',1), (req, res, next) => {
+  res.send("Uploaded!");
+});
   // Test Routes
   app.get("/users/noAuthTest", (req, res) => {
     res.json({

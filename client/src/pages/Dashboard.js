@@ -68,29 +68,19 @@ console.log(data)
         </Link>
         <h1>Dashboard</h1>
 
-        <form onSubmit={this.handleUpload}>
-                    <div>
-                      <label htmlFor="description">Description:</label>
-                      <input
-                        type="text"
-                        name=""
-                        onChange={this.onChange}
-                        placeholder="Description"
-                      />
-                    </div>
+        <form method="post" enctype="multipart/form-data" action="/upload">
+    <p>
+        <input type="text" name="title" placeholder="optional title"/>
+    </p>
 
-                    <div>
-                      <input
-                        type="file"
-                        name=""
-                        id=""
-                        onChange={this.handleSelectedFile}
-                      />
-                    </div>
-                    <button type="submit">
-                      Upload
-                    </button>
-                  </form>
+    <p>
+        <input type="file" name="upl"/>
+    </p>
+
+    <p>
+        <input type="submit"/>
+    </p>
+</form>
       </div>
     );
   }
