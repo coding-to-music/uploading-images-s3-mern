@@ -9,7 +9,7 @@ module.exports = function (app) {
   const multer = require("multer");
   var multerS3 = require('multer-s3')
   const aws = require('aws-sdk'); //"^2.2.41"
-
+  var uuid = require('uuid');
 
   aws.config.update({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -25,10 +25,10 @@ module.exports = function (app) {
         bucket: process.env.AWS_BUCKET_NAME,
         key: function (req, file, cb) {
             console.log(file);
-            cb(null, file.originalname); //use Date.now() for unique file keys
+            cb(null, uuid.v4()); //use Date.now() for unique file keys
         }
     })
-});
+})
 
 
 //used by upload form

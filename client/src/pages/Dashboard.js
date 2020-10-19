@@ -7,7 +7,7 @@ export class Dashboard extends Component {
   state = {
     user: {},
     // description: "",
-    selectedFile: null
+    selectedFile: null,
   };
   componentWillMount() {
     const token = localStorage.getItem("example-app");
@@ -31,28 +31,28 @@ export class Dashboard extends Component {
       redirect: true,
     });
   };
-  handleSelectedFile = e => {
+  handleSelectedFile = (e) => {
     e.preventDefault();
     this.setState({
       // description: e.target.value,
-      selectedFile: e.target.files[0]
+      selectedFile: e.target.files[0],
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleUpload = event => {
+  handleUpload = (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
     data.append("file", this.state.selectedFile);
-console.log(data)
+    console.log(data);
     axios
-      .post('/api/upload', data)
+      .post("/api/upload", data)
       .then(() => {
         this.props.history.push("/");
       })
-      .catch(error => {
+      .catch((error) => {
         alert("Oops some error happened, please try again");
       });
   };
@@ -69,18 +69,18 @@ console.log(data)
         <h1>Dashboard</h1>
 
         <form method="post" enctype="multipart/form-data" action="/upload">
-    <p>
-        <input type="text" name="title" placeholder="optional title"/>
-    </p>
+          <p>
+            <input type="text" name="title"   placeholder="optional title" />
+          </p>
 
-    <p>
-        <input type="file" name="upl"/>
-    </p>
+          <p>
+            <input type="file" accept="image/*" name="upl" />
+          </p>
 
-    <p>
-        <input type="submit"/>
-    </p>
-</form>
+          <p>
+            <input type="submit" />
+          </p>
+        </form>
       </div>
     );
   }
