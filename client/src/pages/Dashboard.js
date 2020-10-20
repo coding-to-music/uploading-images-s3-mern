@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import setAuthToken from "../utils/setAuthtoken";
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Dashboard extends Component {
   state = {
@@ -16,14 +17,14 @@ export class Dashboard extends Component {
       setAuthToken(token);
     }
 
-    // axios
-    //   .get("api/user")
-    //   .then((response) => {
-    //     this.setState({
-    //       user: response.data,
-    //     });
-    //   })
-    //   .catch((err) => console.log(err.response));
+    axios
+      .get("api/user")
+      .then((response) => {
+        this.setState({
+          user: response.data,
+        });
+      })
+      .catch((err) => console.log(err.response));
   }
   handleLogout = () => {
     localStorage.removeItem("example-app");
@@ -41,9 +42,13 @@ export class Dashboard extends Component {
 
   onSubmit = e =>{
     e.preventDefault()
-    console.log(e.target)
+    const selectedFile = this.state.selectedFile
+    const extension = '.' + selectedFile.name.split('.').pop()
+    const newName = uuidv4() + extension
+    // selectedFile.name = newName
+    console.log(selectedFile)
     const data = new FormData(e.target);
-    data.append("file", this.state.selectedFile);
+    data.append("file", selectedFile, newName);
     axios
     .post('/upload', data)
     .then(res =>{
