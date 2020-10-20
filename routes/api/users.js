@@ -24,15 +24,16 @@ module.exports = function (app) {
         acl: 'public-read',
         bucket: process.env.AWS_BUCKET_NAME,
         key: function (req, file, cb) {
+          // console.log(req)
             console.log(file);
-            cb(null, uuid.v4()); //use Date.now() for unique file keys
+            cb(null, file.originalname); //use Date.now() for unique file keys
         }
     })
 })
 
 
 //used by upload form
-app.post('/upload', upload.array('upl',1), (req, res, next) => {
+app.post('/upload', upload.any('file'), (req, res, next) => {
   res.send("Uploaded!");
 });
   // Test Routes

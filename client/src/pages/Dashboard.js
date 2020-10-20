@@ -16,14 +16,14 @@ export class Dashboard extends Component {
       setAuthToken(token);
     }
 
-    axios
-      .get("api/user")
-      .then((response) => {
-        this.setState({
-          user: response.data,
-        });
-      })
-      .catch((err) => console.log(err.response));
+    // axios
+    //   .get("api/user")
+    //   .then((response) => {
+    //     this.setState({
+    //       user: response.data,
+    //     });
+    //   })
+    //   .catch((err) => console.log(err.response));
   }
   handleLogout = () => {
     localStorage.removeItem("example-app");
@@ -39,23 +39,19 @@ export class Dashboard extends Component {
     });
   };
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  handleUpload = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.target);
+  onSubmit = e =>{
+    e.preventDefault()
+    console.log(e.target)
+    const data = new FormData(e.target);
     data.append("file", this.state.selectedFile);
-    console.log(data);
     axios
-      .post("/api/upload", data)
-      .then(() => {
-        this.props.history.push("/");
-      })
-      .catch((error) => {
-        alert("Oops some error happened, please try again");
-      });
-  };
+    .post('/upload', data)
+    .then(res =>{
+      console.log(res.data)
+    })
+    .catch((err) => console.log(data, err.response));
+  }
+ 
   render() {
     const { description, selectedFile } = this.state;
     return (
@@ -68,13 +64,13 @@ export class Dashboard extends Component {
         </Link>
         <h1>Dashboard</h1>
 
-        <form method="post" enctype="multipart/form-data" action="/upload">
+        <form method="post" encType="multipart/form-data" onSubmit={this.onSubmit}>
           <p>
-            <input type="text" name="title"   placeholder="optional title" />
+            {/* <input type="text" name="title"   placeholder="optional title" /> */}
           </p>
 
           <p>
-            <input type="file" accept="image/*" name="upl" />
+            <input type="file" accept="image/*" name="file" onChange={this.handleSelectedFile}/>
           </p>
 
           <p>
