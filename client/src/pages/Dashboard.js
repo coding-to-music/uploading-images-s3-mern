@@ -49,10 +49,17 @@ export class Dashboard extends Component {
     console.log(selectedFile)
     const data = new FormData(e.target);
     data.append("file", selectedFile, newName);
+    const newUser = {
+      profile: newName
+    }
     axios
     .post('/upload', data)
     .then(res =>{
       console.log(res.data)
+      axios
+      .put('/api/user', newUser)
+      .then(console.log(newUser))
+      .catch((err) => console.log(data, err.response));
     })
     .catch((err) => console.log(data, err.response));
   }
