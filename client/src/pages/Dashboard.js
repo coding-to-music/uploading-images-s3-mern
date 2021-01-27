@@ -47,19 +47,17 @@ export class Dashboard extends Component {
     const newName = uuidv4() + extension
     // selectedFile.name = newName
     console.log(selectedFile)
-    const data = new FormData(e.target);
+    const data = new FormData();
     data.append("file", selectedFile, newName);
+    console.log(data)
     const newUser = {
-      profile: newName
+      profile: this.state.user._id
     }
     axios
     .post('/upload', data)
     .then(res =>{
-      console.log(res.data)
-      axios
-      .put('/api/user', newUser)
-      .then(console.log(newUser))
-      .catch((err) => console.log(data, err.response));
+      console.log('test')
+     
     })
     .catch((err) => console.log(data, err.response));
   }
