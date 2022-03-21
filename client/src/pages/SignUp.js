@@ -46,13 +46,15 @@ export class SignUp extends Component {
       },
     };
 
+    console.log("About to post to api/user", newUser.email);
+
     axios
       .post("api/user", newUser)
-      .then(console.log("Thanks for signing up"))
+      .then(console.log("Success!! Thanks for signing up", newUser.email))
       .catch((err) => console.log(err));
 
-    alert("Thank you for signing up!");
-    console.log(newUser);
+    // alert("Thank you for signing up!");
+    console.log("Finished post to api/user", newUser.email);
   };
 
   render() {
