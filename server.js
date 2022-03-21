@@ -29,10 +29,14 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((con) => {
+    console.log("DB connection successful!🔑");
+  });
 
 //Routes
 require("./routes/api/users")(app);

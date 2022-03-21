@@ -7,36 +7,40 @@ module.exports = function (app) {
   require("dotenv").config();
 
   const multer = require("multer");
-  var multerS3 = require('multer-s3')
-  const aws = require('aws-sdk'); //"^2.2.41"
-  var uuid = require('uuid');
+  var multerS3 = require("multer-s3");
+  const aws = require("aws-sdk"); //"^2.2.41"
+  var uuid = require("uuid");
 
   aws.config.update({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    region: process.env.AWS_REGION
-});
+    region: process.env.AWS_REGION,
+  });
   const s3 = new aws.S3();
 
   const upload = multer({
     storage: multerS3({
-        s3: s3,
-        acl: 'public-read',
-        bucket: process.env.AWS_BUCKET_NAME,
-        key: function (req, file, cb) {
-          // console.log(req)
-            console.log(file);
-            cb(null, file.originalname); //use Date.now() for unique file keys
-        }
-    })
-})
+      s3: s3,
+      acl: "public-read",
+      bucket: process.env.AWS_BUCKET_NAME,
+      key: function (req, file, cb) {
+        // console.log(req)
+        console.log(file);
+        cb(null, file.originalname); //use Date.now() for unique file keys
+      },
+    }),
+  });
 
-
-//used by upload form
-app.post('/upload', passport.authenticate("jwt", { session: false }), upload.any('file'),  (req, res, next) => {
-  console.log(req.files[0].originalname)
-  res.send("Uploaded!");
-});
+  //used by upload form
+  app.post(
+    "/upload",
+    passport.authenticate("jwt", { session: false }),
+    upload.any("file"),
+    (req, res, next) => {
+      console.log(req.files[0].originalname);
+      res.send("Uploaded!");
+    }
+  );
   // Test Routes
   app.get("/users/noAuthTest", (req, res) => {
     res.json({
@@ -72,7 +76,6 @@ app.post('/upload', passport.authenticate("jwt", { session: false }), upload.any
 
   //Create new user POST ROUTE
 
-
   // LOGIN
 
   app.post("/api/user/login", (req, res) => {
@@ -80,8 +83,9 @@ app.post('/upload', passport.authenticate("jwt", { session: false }), upload.any
     console.log(email);
     db.User.findOne({ email: email })
       .then((user) => {
-        // console.log("********************",user)
+        console.log("findOne", user);
         if (!user) {
+          console.log("user not found", user);
           return res.status(404).json({ user: "User not found" });
         }
         // let currentUser = user.get()
@@ -144,7 +148,5 @@ app.post('/upload', passport.authenticate("jwt", { session: false }), upload.any
     }
   );
 
-
-  
   // end
 };
