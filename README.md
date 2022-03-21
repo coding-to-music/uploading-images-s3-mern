@@ -4,11 +4,11 @@ https://github.com/coding-to-music/uploading-images-s3-mern
 
 https://uploading-images-s3-mern.herokuapp.com/
 
-I was able to get it working locally but not on Heroku.
-
 The create new user does not work
 
 So cannot log in.
+
+Could not verify it was writing to the database.
 
 By Lynn Mitchell https://github.com/lynn7mitchell
 
