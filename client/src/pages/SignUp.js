@@ -7,16 +7,16 @@ export class SignUp extends Component {
     firstName: "",
     lastName: "",
     email: "",
-    password: ""
+    password: "",
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
 
     const newUser = {
@@ -27,31 +27,32 @@ export class SignUp extends Component {
       katakana: {
         multipleChoice: {
           current: 0,
-          highest: 0
+          highest: 0,
         },
         fillInTheBlank: {
           current: 0,
-          highest: 0
-        }
+          highest: 0,
+        },
       },
       hiragana: {
         multipleChoice: {
           current: 0,
-          highest: 0
+          highest: 0,
         },
         fillInTheBlank: {
           current: 0,
-          highest: 0
-        }
-      }
+          highest: 0,
+        },
+      },
     };
 
     axios
       .post("api/user", newUser)
       .then(console.log("Thanks for signing up"))
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
-      alert("Thank you for signing up!")
+    alert("Thank you for signing up!");
+    console.log(newUser);
   };
 
   render() {
@@ -60,12 +61,12 @@ export class SignUp extends Component {
         display: "block",
         margin: "0 auto",
         paddingBottom: "15px",
-        width: "28vw"
+        width: "28vw",
       },
       main: {
         textAlign: "center",
-        marginTop: "25vh"
-      }
+        marginTop: "25vh",
+      },
     };
     return (
       <div style={styles.main}>
@@ -76,28 +77,28 @@ export class SignUp extends Component {
           <h1>Sign Up</h1>
           <div className="row">
             <form className="col s12" onSubmit={this.onSubmit}>
-                <div className="input-field col s6">
-                  <input
-                    placeholder="First Name"
-                    id="first_name"
-                    type="text"
-                    className="validate"
-                    name="firstName"
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="last_name">First Name</label>
-                </div>
-                <div className="input-field col s6">
-                  <input
-                    placeholder="Last Name"
-                    id="first_name"
-                    type="text"
-                    className="validate"
-                    name="lastName"
-                    onChange={this.onChange}
-                  />
-                  <label htmlFor="first_name">Last Name</label>
-                </div>
+              <div className="input-field col s6">
+                <input
+                  placeholder="First Name"
+                  id="first_name"
+                  type="text"
+                  className="validate"
+                  name="firstName"
+                  onChange={this.onChange}
+                />
+                <label htmlFor="last_name">First Name</label>
+              </div>
+              <div className="input-field col s6">
+                <input
+                  placeholder="Last Name"
+                  id="first_name"
+                  type="text"
+                  className="validate"
+                  name="lastName"
+                  onChange={this.onChange}
+                />
+                <label htmlFor="first_name">Last Name</label>
+              </div>
 
               <div className="row">
                 <div className="input-field col s12">
