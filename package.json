@@ -4,8 +4,7 @@
   "description": "Mern Demo",
   "main": "server.js",
   "engines": {
-    "node": "16.0.0",
-    "npm": "5.6.0"
+    "node": "16x"
   },
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -13,7 +12,7 @@
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
-    "build": "cd client && npm run build ",
+    "build": "cd client && npm run build",
     "deploy": "git add . && git commit -m Build && git push",
     "heroku-postbuild": "npm run build"
   },
