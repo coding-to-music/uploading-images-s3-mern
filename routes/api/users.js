@@ -64,6 +64,8 @@ module.exports = function (app) {
     "/api/user",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
+      console.log("/api/user req.user.id", req.user.id);
+
       db.User.findById(req.user.id)
         .then((user) => {
           if (user) {
@@ -85,7 +87,7 @@ module.exports = function (app) {
       .then((user) => {
         console.log("findOne", user);
         if (!user) {
-          console.log("user not found", user);
+          console.log("/api/user/login user not found, user", user);
           return res.status(404).json({ user: "User not found" });
         }
         // let currentUser = user.get()
